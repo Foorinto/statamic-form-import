@@ -34,6 +34,9 @@ Rien d'autre : un menu **« Import formulaire »** apparaît dans la section
    noms correspondent), **et/ou** saisis une **valeur fixe** appliquée à toutes
    les lignes (ex. `pays = Luxembourg`). La valeur fixe **prime** sur la colonne ;
    un champ sans colonne ni valeur fixe est ignoré.
+   - Une ligne **« Date de la soumission »** permet de mapper l'horodatage de la
+     soumission (colonne ou valeur fixe). Formats : `JJ/MM/AAAA` (français),
+     `AAAA-MM-JJ` (ISO) et la plupart des formats datés. Vide → date = maintenant.
 4. **Importer** → une soumission est créée par ligne. Doublons **non** filtrés
    (tout est importé).
 
