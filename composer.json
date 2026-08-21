@@ -1,0 +1,27 @@
+{
+    "name": "foorintodev/statamic-form-import",
+    "description": "Importe des soumissions dans un formulaire Statamic depuis un CSV (avec mapping des colonnes), et permet la saisie manuelle d'une soumission.",
+    "type": "statamic-addon",
+    "version": "1.0.0",
+    "license": "MIT",
+    "autoload": {
+        "psr-4": {
+            "Foorintodev\\FormImport\\": "src"
+        }
+    },
+    "extra": {
+        "statamic": {
+            "name": "Foorintodev Form Import",
+            "description": "Import CSV (mapping des colonnes) + saisie manuelle de soumissions de formulaire."
+        },
+        "laravel": {
+            "providers": [
+                "Foorintodev\\FormImport\\ServiceProvider"
+            ]
+        }
+    },
+    "require": {
+        "php": "^8.2",
+        "statamic/cms": "^6.0"
+    }
+}
