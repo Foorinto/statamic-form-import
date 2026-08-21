@@ -85,7 +85,7 @@ class ImportController extends Controller
         if ($activeFields->isEmpty()) {
             @unlink($path);
 
-            return redirect()->route('form-import.index')
+            return redirect(cp_route('form-import.index'))
                 ->with('error', 'Aucun champ associé : recommencez en associant au moins un champ (colonne ou valeur fixe).');
         }
 
@@ -113,7 +113,7 @@ class ImportController extends Controller
 
         @unlink($path);
 
-        return redirect()->route('form-import.index')
+        return redirect(cp_route('form-import.index'))
             ->with('success', "{$imported} soumission(s) importée(s) dans « {$form->title()} ».");
     }
 

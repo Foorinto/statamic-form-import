@@ -49,7 +49,7 @@ class ManualController extends Controller
         $submission->data($data);
         $submission->save();
 
-        return redirect()->route('form-import.index')
+        return redirect(cp_route('form-import.index'))
             ->with('success', "Soumission ajoutée à « {$form->title()} ».");
     }
 }
