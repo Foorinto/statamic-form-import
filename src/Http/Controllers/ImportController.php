@@ -2,6 +2,7 @@
 
 namespace Foorintodev\FormImport\Http\Controllers;
 
+use Carbon\Carbon;
 use Foorintodev\FormImport\Support\Csv;
 use Foorintodev\FormImport\Support\ResolvesForms;
 use Illuminate\Http\Request;
@@ -12,6 +13,9 @@ use Statamic\Facades\Form;
 class ImportController extends Controller
 {
     use ResolvesForms;
+
+    /** Clé spéciale (hors blueprint) pour mapper la date/horodatage de la soumission. */
+    public const DATE_KEY = '__date';
 
     public function index()
     {
@@ -90,6 +94,7 @@ class ImportController extends Controller
         }
 
         $imported = 0;
+        $index = 0;
         foreach ($csv['rows'] as $row) {
             $data = [];
             foreach ($activeFields as $handle) {
@@ -106,8 +111,21 @@ class ImportController extends Controller
             }
 
             $submission = $form->makeSubmission();
+
+            // Date de la soumission : mappable (colonne ou valeur fixe). Sinon = maintenant.
+            $rawDate = $this->hasFixed($fixed, self::DATE_KEY)
+                ? $fixed[self::DATE_KEY]
+                : ($this->hasColumn($mapping, self::DATE_KEY) ? ($row[$mapping[self::DATE_KEY]] ?? '') : '');
+
+            if ($rawDate !== '' && ($date = $this->parseDate((string) $rawDate))) {
+                // L'id EST l'horodatage. On ajoute une fraction unique pour éviter
+                // les collisions de fichiers quand plusieurs lignes ont la même date.
+                $submission->id(number_format($date->timestamp + $index / 1000000, 6, '.', ''));
+            }
+
             $submission->data($data);
             $submission->save();
+            $index++;
             $imported++;
         }
 
@@ -125,6 +143,26 @@ class ImportController extends Controller
     private function hasColumn(array $mapping, string $handle): bool
     {
         return isset($mapping[$handle]) && $mapping[$handle] !== '';
+    }
+
+    /** Parse une date depuis le CSV : JJ/MM/AAAA (français) prioritaire, sinon ISO/divers. */
+    private function parseDate(string $value): ?Carbon
+    {
+        $value = trim($value);
+        if ($value === '') {
+            return null;
+        }
+
+        try {
+            // Format français JJ/MM/AAAA — sans ça, Carbon::parse l'interpréterait en MM/JJ.
+            if (preg_match('#^(\d{1,2})/(\d{1,2})/(\d{4})$#', $value, $m)) {
+                return Carbon::create((int) $m[3], (int) $m[2], (int) $m[1]);
+            }
+
+            return Carbon::parse($value);
+        } catch (\Throwable $e) {
+            return null;
+        }
     }
 
     /** Conversion d'une valeur CSV vers le type du champ. */

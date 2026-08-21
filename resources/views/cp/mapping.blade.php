@@ -23,6 +23,25 @@
                         <tr><th>Champ du formulaire</th><th>Colonne du CSV</th><th>Valeur fixe (optionnel)</th></tr>
                     </thead>
                     <tbody>
+                        {{-- Ligne spéciale : date/horodatage de la soumission (hors blueprint). --}}
+                        <tr>
+                            <td>
+                                <strong>Date de la soumission</strong>
+                                <span class="fi-muted">(horodatage — défaut : maintenant)</span>
+                            </td>
+                            <td>
+                                <select name="mapping[__date]" class="fi-select">
+                                    <option value="">— ignorer —</option>
+                                    @foreach ($headers as $header)
+                                        <option value="{{ $header }}" @selected(\Illuminate\Support\Str::contains(\Illuminate\Support\Str::slug($header), 'date'))>{{ $header }}</option>
+                                    @endforeach
+                                </select>
+                            </td>
+                            <td>
+                                <input type="text" name="fixed[__date]" class="fi-input" placeholder="JJ/MM/AAAA">
+                            </td>
+                        </tr>
+
                         @foreach ($fields as $field)
                             <tr>
                                 <td>
