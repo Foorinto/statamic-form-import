@@ -2,8 +2,6 @@
 @section('title', __('Import formulaire'))
 
 @section('content')
-    @include('form-import::cp.partials.styles')
-
     <div class="fi-wrap">
         <h1 class="fi-h1">Import de soumissions</h1>
         <p class="fi-sub">Importer un CSV dans un formulaire, ou ajouter une soumission à la main.</p>
@@ -28,7 +26,7 @@
                     <div class="fi-row">
                         <label class="fi-label">Fichier CSV</label>
                         <input type="file" name="csv" accept=".csv,text/csv" class="fi-input" required>
-                        <p class="fi-muted" style="margin-top: .4rem;">
+                        <p class="fi-muted fi-mt-sm">
                             La 1<sup>re</sup> ligne doit contenir les noms de colonnes. Séparateur « , » ou « ; » détecté automatiquement.
                         </p>
                     </div>

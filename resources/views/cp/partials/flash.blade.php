@@ -8,7 +8,7 @@
 
 @if ($errors->any())
     <div class="fi-alert fi-alert-err">
-        <ul style="margin: 0; padding-left: 1.2rem;">
+        <ul class="fi-list">
             @foreach ($errors->all() as $error)
                 <li>{{ $error }}</li>
             @endforeach

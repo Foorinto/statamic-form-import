@@ -1,0 +1,32 @@
+/* Foorintodev Form Import — styles CP.
+   Chargé comme feuille externe (dans le <head>, hors du conteneur Vue #statamic),
+   car Vue supprime les <style>/style= inline placés dans le contenu blade. */
+
+.fi-wrap { max-width: 900px; margin: 0 auto; padding: 2rem 1.5rem; }
+.fi-h1 { font-size: 1.5rem; font-weight: 700; margin: 0 0 .25rem; color: #172a45; }
+.fi-sub { color: #64748b; margin: 0 0 1.5rem; }
+
+.fi-card { background: #fff; border: 1px solid #e2e8f0; border-radius: .6rem; padding: 1.5rem; margin-bottom: 1.5rem; box-shadow: 0 1px 2px rgba(0, 0, 0, .04); }
+.fi-card h2 { font-size: 1.05rem; font-weight: 700; margin: 0 0 1rem; color: #172a45; }
+
+.fi-label { display: block; font-weight: 600; font-size: .85rem; margin-bottom: .35rem; color: #334155; }
+.fi-input, .fi-select { width: 100%; padding: .55rem .7rem; border: 1px solid #cbd5e1; border-radius: .4rem; font-size: .9rem; background: #fff; color: #172a45; }
+.fi-input[type="file"] { padding: .45rem .5rem; }
+.fi-row { margin-bottom: 1rem; }
+
+.fi-btn { display: inline-flex; align-items: center; gap: .4rem; background: #172a45; color: #fff; font-weight: 600; font-size: .9rem; padding: .6rem 1.1rem; border: none; border-radius: .5rem; cursor: pointer; text-decoration: none; }
+.fi-btn:hover { background: #223a5e; }
+.fi-btn-light { background: #eef2f7; color: #172a45; }
+.fi-btn-light:hover { background: #e2e8f0; }
+.fi-ml { margin-left: .5rem; }
+.fi-mt-sm { margin-top: .4rem; }
+
+.fi-alert { padding: .85rem 1rem; border-radius: .5rem; margin-bottom: 1.25rem; font-size: .9rem; }
+.fi-alert-ok { background: #dcfce7; border: 1px solid #86efac; color: #14532d; }
+.fi-alert-err { background: #fee2e2; border: 1px solid #fca5a5; color: #7f1d1d; }
+.fi-list { margin: 0; padding-left: 1.2rem; }
+
+.fi-table { width: 100%; border-collapse: collapse; font-size: .9rem; }
+.fi-table th, .fi-table td { text-align: left; padding: .5rem .6rem; border-bottom: 1px solid #eef2f7; vertical-align: middle; }
+.fi-muted { color: #64748b; font-size: .85rem; }
+.fi-check { display: inline-flex; align-items: center; gap: .5rem; }

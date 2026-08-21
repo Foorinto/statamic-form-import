@@ -2,8 +2,6 @@
 @section('title', __('Saisie manuelle'))
 
 @section('content')
-    @include('form-import::cp.partials.styles')
-
     <div class="fi-wrap">
         <h1 class="fi-h1">Ajouter une soumission</h1>
         <p class="fi-sub">Formulaire « {{ $form->title() }} ».</p>
@@ -20,7 +18,7 @@
                         <label class="fi-label" for="f-{{ $field['handle'] }}">{{ $field['display'] }}</label>
 
                         @if ($field['type'] === 'toggle')
-                            <label style="display: inline-flex; align-items: center; gap: .5rem;">
+                            <label class="fi-check">
                                 <input type="checkbox" id="f-{{ $field['handle'] }}" name="fields[{{ $field['handle'] }}]" value="1"
                                     @checked(old('fields.'.$field['handle']))> Oui
                             </label>
@@ -39,7 +37,7 @@
                 @endforeach
 
                 <button type="submit" class="fi-btn">Enregistrer la soumission</button>
-                <a href="{{ cp_route('form-import.index') }}" class="fi-btn fi-btn-light" style="margin-left: .5rem;">Annuler</a>
+                <a href="{{ cp_route('form-import.index') }}" class="fi-btn fi-btn-light fi-ml">Annuler</a>
             </div>
         </form>
     </div>

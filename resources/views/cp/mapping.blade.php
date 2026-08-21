@@ -2,8 +2,6 @@
 @section('title', __('Mapping des colonnes'))
 
 @section('content')
-    @include('form-import::cp.partials.styles')
-
     <div class="fi-wrap">
         <h1 class="fi-h1">Associer les colonnes</h1>
         <p class="fi-sub">
@@ -45,7 +43,7 @@
             </div>
 
             <button type="submit" class="fi-btn">Importer {{ $rowCount }} ligne(s)</button>
-            <a href="{{ cp_route('form-import.index') }}" class="fi-btn fi-btn-light" style="margin-left: .5rem;">Annuler</a>
+            <a href="{{ cp_route('form-import.index') }}" class="fi-btn fi-btn-light fi-ml">Annuler</a>
         </form>
     </div>
 @endsection
