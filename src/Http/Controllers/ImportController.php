@@ -63,7 +63,8 @@ class ImportController extends Controller
         $request->validate([
             'form' => 'required|string',
             'token' => 'required|string',
-            'mapping' => 'required|array',
+            'mapping' => 'nullable|array',
+            'fixed' => 'nullable|array',
         ]);
 
         $form = Form::find($request->input('form'));
@@ -74,19 +75,30 @@ class ImportController extends Controller
 
         $csv = Csv::read($path);
 
-        // On ne garde que les champs réellement associés à une colonne.
-        $mapping = array_filter(
-            $request->input('mapping', []),
-            fn ($column) => $column !== '' && $column !== null
-        );
-
+        $mapping = $request->input('mapping', []);
+        $fixed = $request->input('fixed', []);
         $types = collect($this->formFields($form))->mapWithKeys(fn ($f) => [$f['handle'] => $f['type']]);
+
+        // Champs à remplir : ceux qui ont une valeur fixe OU une colonne associée.
+        $activeFields = $types->keys()->filter(fn ($handle) => $this->hasFixed($fixed, $handle) || $this->hasColumn($mapping, $handle))->values();
+
+        if ($activeFields->isEmpty()) {
+            @unlink($path);
+
+            return redirect()->route('form-import.index')
+                ->with('error', 'Aucun champ associé : recommencez en associant au moins un champ (colonne ou valeur fixe).');
+        }
 
         $imported = 0;
         foreach ($csv['rows'] as $row) {
             $data = [];
-            foreach ($mapping as $fieldHandle => $column) {
-                $data[$fieldHandle] = $this->cast($types->get($fieldHandle), $row[$column] ?? '');
+            foreach ($activeFields as $handle) {
+                // La valeur fixe prime ; sinon on prend la valeur de la colonne.
+                $raw = $this->hasFixed($fixed, $handle)
+                    ? $fixed[$handle]
+                    : ($row[$mapping[$handle]] ?? '');
+
+                $data[$handle] = $this->cast($types->get($handle), (string) $raw);
             }
 
             if (empty(array_filter($data, fn ($v) => $v !== '' && $v !== false && $v !== null))) {
@@ -103,6 +115,16 @@ class ImportController extends Controller
 
         return redirect()->route('form-import.index')
             ->with('success', "{$imported} soumission(s) importée(s) dans « {$form->title()} ».");
+    }
+
+    private function hasFixed(array $fixed, string $handle): bool
+    {
+        return isset($fixed[$handle]) && $fixed[$handle] !== '';
+    }
+
+    private function hasColumn(array $mapping, string $handle): bool
+    {
+        return isset($mapping[$handle]) && $mapping[$handle] !== '';
     }
 
     /** Conversion d'une valeur CSV vers le type du champ. */

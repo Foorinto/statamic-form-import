@@ -31,7 +31,9 @@ Rien d'autre : un menu **« Import formulaire »** apparaît dans la section
 2. Choisis le formulaire de destination, uploade le CSV (1re ligne = noms de
    colonnes).
 3. Associe chaque champ du formulaire à une colonne du CSV (pré-rempli quand les
-   noms correspondent). Les champs laissés sur « ignorer » ne sont pas remplis.
+   noms correspondent), **et/ou** saisis une **valeur fixe** appliquée à toutes
+   les lignes (ex. `pays = Luxembourg`). La valeur fixe **prime** sur la colonne ;
+   un champ sans colonne ni valeur fixe est ignoré.
 4. **Importer** → une soumission est créée par ligne. Doublons **non** filtrés
    (tout est importé).
 

@@ -6,7 +6,8 @@
         <h1 class="fi-h1">Associer les colonnes</h1>
         <p class="fi-sub">
             {{ $rowCount }} ligne(s) détectée(s) → formulaire « {{ $form->title() }} ».
-            Associez chaque champ à une colonne du CSV (ou laissez « ignorer »).
+            Associez chaque champ à une colonne du CSV, et/ou saisissez une <strong>valeur fixe</strong>
+            (appliquée à toutes les lignes ; elle prime sur la colonne). Laissez vide pour ignorer.
         </p>
 
         @include('form-import::cp.partials.flash')
@@ -19,7 +20,7 @@
             <div class="fi-card">
                 <table class="fi-table">
                     <thead>
-                        <tr><th>Champ du formulaire</th><th>Colonne du CSV</th></tr>
+                        <tr><th>Champ du formulaire</th><th>Colonne du CSV</th><th>Valeur fixe (optionnel)</th></tr>
                     </thead>
                     <tbody>
                         @foreach ($fields as $field)
@@ -35,6 +36,9 @@
                                             <option value="{{ $header }}" @selected(\Illuminate\Support\Str::slug($header) === \Illuminate\Support\Str::slug($field['handle']) || \Illuminate\Support\Str::slug($header) === \Illuminate\Support\Str::slug($field['display']))>{{ $header }}</option>
                                         @endforeach
                                     </select>
+                                </td>
+                                <td>
+                                    <input type="text" name="fixed[{{ $field['handle'] }}]" class="fi-input" placeholder="—">
                                 </td>
                             </tr>
                         @endforeach
