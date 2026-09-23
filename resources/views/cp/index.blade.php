@@ -3,8 +3,8 @@
 
 @section('content')
     <div class="fi-wrap">
-        <h1 class="fi-h1">Import de soumissions</h1>
-        <p class="fi-sub">Importer un CSV dans un formulaire, ou ajouter une soumission à la main.</p>
+        <h1 class="fi-h1">Import / export de soumissions</h1>
+        <p class="fi-sub">Importer un CSV dans un formulaire, ajouter une soumission à la main, ou exporter les soumissions sans doublons.</p>
 
         @include('form-import::cp.partials.flash')
 
@@ -46,6 +46,20 @@
                         </select>
                     </div>
                     <button type="submit" class="fi-btn fi-btn-light">Saisir une entrée →</button>
+                </form>
+            </div>
+            <div class="fi-card">
+                <h2>Exporter en CSV (avec dédoublonnage)</h2>
+                <form method="GET" action="{{ cp_route('form-import.export.create') }}">
+                    <div class="fi-row">
+                        <label class="fi-label">Formulaire</label>
+                        <select name="form" class="fi-select" required>
+                            @foreach ($forms as $f)
+                                <option value="{{ $f['handle'] }}">{{ $f['title'] }}</option>
+                            @endforeach
+                        </select>
+                    </div>
+                    <button type="submit" class="fi-btn fi-btn-light">Options d'export →</button>
                 </form>
             </div>
         @endif

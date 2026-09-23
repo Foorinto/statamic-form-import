@@ -44,6 +44,18 @@ Rien d'autre : un menu **« Import formulaire »** apparaît dans la section
 1. CP → **Tools → Import formulaire** → *Ajouter une soumission manuellement*.
 2. Choisis le formulaire, remplis les champs, **Enregistrer**.
 
+**Export CSV dédoublonné**
+1. CP → **Tools → Import formulaire** → *Exporter en CSV*, choisis le formulaire.
+2. Coche les critères de dédoublonnage : **Email**, **Nom et prénom**,
+   **Adresse complète** (les champs de chaque critère sont devinés d'après leurs
+   handles et modifiables). Une soumission est écartée dès qu'**un** critère
+   coché correspond à une soumission déjà retenue ; tous les champs du critère
+   doivent être identiques, sans tenir compte de la casse, des accents, des
+   espaces et de la ponctuation (l'email n'est comparé qu'en minuscules).
+3. Choisis quelle soumission garder en cas de doublon (la plus récente par
+   défaut), puis **Télécharger le CSV** (séparateur `;`, UTF-8 avec BOM → s'ouvre
+   directement dans Excel). Aucun critère coché = export complet.
+
 ## Notes
 
 - L'import crée les soumissions telles quelles ; aucune validation du blueprint

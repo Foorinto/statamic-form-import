@@ -16,6 +16,11 @@ class ServiceProvider extends AddonServiceProvider
         __DIR__.'/../resources/dist/css/cp.css',
     ];
 
+    // Bouton « Export dédoublonné » injecté sur la page d'un formulaire.
+    protected $scripts = [
+        __DIR__.'/../resources/dist/js/cp.js',
+    ];
+
     public function bootAddon()
     {
         $this->loadViewsFrom(__DIR__.'/../resources/views', 'form-import');
